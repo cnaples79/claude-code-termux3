@@ -119,18 +119,18 @@ shebang — there is no termux-exec preload inside the glibc claude process.
 
 ## Consumer setup (dotfiles)
 
-Install the package from a managed script and let it own `settings.json`
-yourself by skipping the merge. Example chezmoi `run_onchange_*` snippet:
+Drive the install from a dotfile manager and own `settings.json` yourself by
+skipping the package's merge (`CLAUDE_CODE_SKIP_SETTINGS=1`) so your dotfiles
+become the single source for the
+[keys it would otherwise add](#settings-merged-into-claudesettingsjson).
 
-```bash
-version=2.1.153
-CLAUDE_CODE_VERSION="$version" \
-CLAUDE_CODE_SKIP_SETTINGS=1 \
-  bash <(curl -fsSL https://raw.githubusercontent.com/gtbuchanan/claude-code-termux/main/install.sh)
-# postinstall fetches the pinned version on first install. When the pin
-# changes (the .deb itself is unchanged), re-apply it explicitly:
-CLAUDE_CODE_VERSION="$version" claude-code-termux-update
-```
+For a worked example, the author's dotfiles install the package with
+[chezmoi](https://www.chezmoi.io), pinning both versions for
+[Renovate](https://docs.renovatebot.com) and re-applying on a bump. The
+[Android: claude-code-termux Package](https://github.com/gtbuchanan/dotfiles/blob/main/docs/claude-code.md#android-claude-code-termux-package)
+doc walks through it, backed by the
+[version pins](https://github.com/gtbuchanan/dotfiles/blob/main/home/.chezmoidata/claude-code.yaml)
+and [install script](https://github.com/gtbuchanan/dotfiles/blob/main/home/.chezmoiscripts/android/run_onchange_after_claude-code-install.sh.tmpl).
 
 ## Uninstall
 
